@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teu Nome — Portfólio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F9F8F5;
+      --surface: #FFFFFF;
+      --text: #1A1A18;
+      --text-muted: #6B6B66;
+      --accent: #2A2A26;
+      --line: #E4E2DA;
+      --tag-bg: #EEECEA;
+      --tag-text: #4A4A46;
+      --highlight: #C8B89A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(249,248,245,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-inner { width: 100%; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--text-muted);
+    }
+    .hero-desc {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+    .btn-primary:hover { background: #333330; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+    .btn-secondary:hover { border-color: var(--text); background: var(--surface); }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.1em;
+      text-transform: uppercase; animation: fadeUp 0.6s 0.6s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 40px; background: var(--line);
+      animation: scrollLine 2s 1s infinite;
+    }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 3rem; display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; max-width: 60px;
+      height: 1px; background: var(--line);
+    }
+
+    /* SOBRE */
+    #sobre { border-top: 1px solid var(--line); }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .sobre-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    .sobre-text p {
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .sobre-stats {
+      display: flex; flex-direction: column; gap: 1.5rem;
+      padding-top: 1rem;
+    }
+    .stat-item {
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .stat-item:last-child { border-bottom: none; }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 2rem;
+    }
+    .skill-card {
+      background: var(--bg);
+      padding: 1.5rem;
+    }
+    .skill-category {
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 400;
+    }
+
+    /* PROJETOS */
+    #projetos { border-top: 1px solid var(--line); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .project-card {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .project-card:hover { background: var(--bg); }
+    .project-year {
+      font-size: 0.7rem; color: var(--text-muted);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      line-height: 1.2;
+    }
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      flex: 1;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .project-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.75rem; color: var(--text-muted);
+    }
+    .project-arrow { font-size: 1rem; transition: transform 0.2s; }
+    .project-card:hover .project-arrow { transform: translate(3px, -3px); }
+
+    /* CV */
+    #cv { border-top: 1px solid var(--line); }
+    .cv-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .cv-section { margin-bottom: 2.5rem; }
+    .cv-section-title {
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .cv-item { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
+    .cv-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .cv-item-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.25rem; gap: 1rem; }
+    .cv-item-title { font-weight: 500; font-size: 0.9rem; }
+    .cv-item-date { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+    .cv-item-sub { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .cv-item-desc { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
+    .cv-download {
+      margin-top: 2.5rem;
+      display: flex; align-items: center; gap: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      text-decoration: none; color: inherit;
+      transition: border-color 0.2s;
+    }
+    .cv-download:hover { border-color: var(--text); }
+    .cv-download-icon { font-size: 1.5rem; }
+    .cv-download-text { font-size: 0.875rem; font-weight: 500; }
+    .cv-download-sub { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* CONTACTO */
+    #contacto { border-top: 1px solid var(--line); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .contact-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    .contact-heading em { font-style: italic; color: var(--text-muted); }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text);
+      font-size: 0.875rem; padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      transition: gap 0.2s;
+    }
+    .contact-link:hover { gap: 16px; }
+    .contact-link-label { color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; min-width: 80px; }
+    .contact-form-side { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; }
+    .form-group input, .form-group textarea {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--text); }
+    .form-group textarea { height: 100px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 900px; margin: 0 auto;
+      font-size: 0.75rem; color: var(--text-muted);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .sobre-grid, .cv-columns, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      section { padding: 4rem 1rem; }
+      .hero { padding: 7rem 1rem 4rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">Teu Nome.</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#cv">CV</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section style="padding:0; position:relative;">
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Estudante universitário · Disponível para estágios</span>
+      <h1>Olá, sou<br /><em>Teu Nome</em></h1>
+      <p class="hero-desc">
+        Estudante de [Curso] na [Universidade]. Apaixonado por [área principal], com foco em criar soluções simples para problemas complexos.
+      </p>
+      <div class="hero-actions">
+        <a href="#projetos" class="btn btn-primary">Ver projetos →</a>
+        <a href="#cv" class="btn btn-secondary">Curriculum Vitae</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="section-label">Sobre mim</div>
+    <div class="sobre-grid reveal">
+      <div class="sobre-text">
+        <h2>Estudante, curioso, <em>criativo</em></h2>
+        <p>
+          Sou estudante de [Curso] na [Universidade], atualmente no [X.º ano]. O meu interesse pela área começou [breve história pessoal]. 
+        </p>
+        <p>
+          Acredito que o melhor trabalho surge da combinação entre rigor técnico e pensamento criativo. Procuro sempre aprender e melhorar.
+        </p>
+        <p>
+          Fora da academia, dedico-me a [hobbies/interesses relevantes], o que me ajuda a ter uma perspetiva diferente sobre os problemas.
+        </p>
+
+        <div class="skills-grid" style="margin-top:2.5rem;">
+          <div class="skill-card">
+            <div class="skill-category">Linguagens</div>
+            <div class="skill-tags">
+              <span class="tag">Python</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">Java</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-category">Ferramentas</div>
+            <div class="skill-tags">
+              <span class="tag">Git</span>
+              <span class="tag">VS Code</span>
+              <span class="tag">Figma</span>
+              <span class="tag">LaTeX</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-category">Soft Skills</div>
+            <div class="skill-tags">
+              <span class="tag">Trabalho em equipa</span>
+              <span class="tag">Comunicação</span>
+              <span class="tag">Resolução de problemas</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-category">Idiomas</div>
+            <div class="skill-tags">
+              <span class="tag">Português — Nativo</span>
+              <span class="tag">Inglês — B2/C1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sobre-stats">
+        <div class="stat-item">
+          <div class="stat-number">3.º</div>
+          <div class="stat-label">Ano de Licenciatura</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">12+</div>
+          <div class="stat-label">Projetos académicos concluídos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Áreas de especialização</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Vontade de aprender</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="container">
+    <div class="section-label">Projetos selecionados</div>
+    <div class="projects-grid reveal">
+
+      <a href="#" class="project-card">
+        <div class="project-year">2024 — Académico</div>
+        <div class="project-title">Nome do Projeto 1</div>
+        <div class="project-desc">Breve descrição do que o projeto faz, qual o problema que resolve e o que aprendeste com ele. Uma ou duas frases.</div>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Pandas</span>
+        </div>
+        <div class="project-footer">
+          <span>Ver no GitHub</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-year">2024 — Pessoal</div>
+        <div class="project-title">Nome do Projeto 2</div>
+        <div class="project-desc">Breve descrição do que o projeto faz, qual o problema que resolve e o que aprendeste com ele. Uma ou duas frases.</div>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">React</span>
+          <span class="tag">API</span>
+        </div>
+        <div class="project-footer">
+          <span>Ver demo</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-year">2023 — Académico</div>
+        <div class="project-title">Nome do Projeto 3</div>
+        <div class="project-desc">Breve descrição do que o projeto faz, qual o problema que resolve e o que aprendeste com ele. Uma ou duas frases.</div>
+        <div class="project-tags">
+          <span class="tag">Java</span>
+          <span class="tag">Estruturas de Dados</span>
+        </div>
+        <div class="project-footer">
+          <span>Ver no GitHub</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a href="#" class="project-card" style="background: var(--text); color: var(--bg);">
+        <div style="color: rgba(255,255,255,0.5); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;">Mais projetos</div>
+        <div class="project-title" style="margin-top:auto; padding-top: 3rem;">Ver todos no GitHub →</div>
+        <div style="font-size:0.8rem; color: rgba(255,255,255,0.5); font-weight:300;">github.com/teuusername</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CV -->
+<section id="cv">
+  <div class="container">
+    <div class="section-label">Curriculum Vitae</div>
+    <div class="cv-columns reveal">
+
+      <div>
+        <div class="cv-section">
+          <div class="cv-section-title">Educação</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Licenciatura em [Curso]</div>
+              <div class="cv-item-date">2022 – Presente</div>
+            </div>
+            <div class="cv-item-sub">Universidade do [Nome] · Braga, PT</div>
+            <div class="cv-item-desc">Média atual: [X,X] valores. Unidades curriculares de destaque: [UC1], [UC2], [UC3].</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Ensino Secundário</div>
+              <div class="cv-item-date">2019 – 2022</div>
+            </div>
+            <div class="cv-item-sub">Escola [Nome] · [Cidade], PT</div>
+            <div class="cv-item-desc">Curso de Ciências e Tecnologias. Classificação final: [XX] valores.</div>
+          </div>
+        </div>
+
+        <div class="cv-section">
+          <div class="cv-section-title">Experiência</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Voluntário / Monitor</div>
+              <div class="cv-item-date">2023</div>
+            </div>
+            <div class="cv-item-sub">[Organização / Evento]</div>
+            <div class="cv-item-desc">Descrição breve do que fizeste e do impacto que tiveste.</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Projeto de Investigação</div>
+              <div class="cv-item-date">2024</div>
+            </div>
+            <div class="cv-item-sub">[Lab / Grupo de investigação]</div>
+            <div class="cv-item-desc">Contribuí para investigação em [área], desenvolvendo [X]. Sob orientação do Prof. [Nome].</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="cv-section">
+          <div class="cv-section-title">Certificações e Cursos</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Nome do Certificado</div>
+              <div class="cv-item-date">2024</div>
+            </div>
+            <div class="cv-item-sub">Plataforma / Entidade emissora</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Outro Certificado</div>
+              <div class="cv-item-date">2023</div>
+            </div>
+            <div class="cv-item-sub">Plataforma / Entidade emissora</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Certificado de Inglês</div>
+              <div class="cv-item-date">2022</div>
+            </div>
+            <div class="cv-item-sub">Cambridge / IELTS / outra entidade — Nível B2/C1</div>
+          </div>
+        </div>
+
+        <div class="cv-section">
+          <div class="cv-section-title">Prémios e Distinções</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Nome do Prémio ou Destaque</div>
+              <div class="cv-item-date">2024</div>
+            </div>
+            <div class="cv-item-sub">Entidade / Concurso</div>
+            <div class="cv-item-desc">Breve contexto sobre o que foi o prémio ou reconhecimento.</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div class="cv-item-title">Melhor projeto de UC</div>
+              <div class="cv-item-date">2023</div>
+            </div>
+            <div class="cv-item-sub">[Universidade] — [Unidade Curricular]</div>
+            <div class="cv-item-desc">Projeto selecionado como o melhor da turma de [X] estudantes.</div>
+          </div>
+        </div>
+
+        <a href="#" class="cv-download">
+          <span class="cv-download-icon">↓</span>
+          <div>
+            <div class="cv-download-text">Descarregar CV completo</div>
+            <div class="cv-download-sub">PDF · Atualizado em [mês] 2025</div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="section-label">Vamos falar</div>
+    <div class="contact-inner reveal">
+
+      <div>
+        <h2 class="contact-heading">Aberto a<br /><em>oportunidades</em><br />e colaborações</h2>
+        <p style="font-size:0.9rem; color:var(--text-muted); font-weight:300; max-width:350px;">
+          Seja para um estágio, projeto conjunto ou simplesmente trocar ideias — não hesites em entrar em contacto.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:teu@email.com" class="contact-link">
+            <span class="contact-link-label">Email</span>
+            <span>teu@email.com</span>
+          </a>
+          <a href="https://linkedin.com/in/teuusername" class="contact-link" target="_blank">
+            <span class="contact-link-label">LinkedIn</span>
+            <span>linkedin.com/in/teuusername</span>
+          </a>
+          <a href="https://github.com/teuusername" class="contact-link" target="_blank">
+            <span class="contact-link-label">GitHub</span>
+            <span>github.com/teuusername</span>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form-side" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" placeholder="O teu nome" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="o.teu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Mensagem</label>
+          <textarea placeholder="Olá, gostaria de..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:start;">
+          Enviar mensagem →
+        </button>
+        <p id="form-msg" style="font-size:0.8rem; color:var(--text-muted); display:none;">
+          Obrigado! Responderei em breve.
+        </p>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="border-top: 1px solid var(--line); padding: 2rem; max-width:900px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:0.75rem; color:var(--text-muted);">
+  <span>© 2025 Teu Nome. Feito com HTML puro.</span>
+  <span>Braga, Portugal</span>
+</div>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-msg').style.display = 'block';
+    e.target.reset();
+  }
+
+  // Nav active
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--text)' : 'var(--text-muted)';
+    });
+  });
+</script>
+</body>
+</html>
